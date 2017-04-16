@@ -34,7 +34,7 @@ defmodule MixDocker do
       parsed = OptionParser.parse(args)
       case parsed do
         {[drone: true], [], []} -> 
-          IO.puts("TESTTTTTTTT)
+          IO.puts("TESTTTTTTTT")
           Mix.shell.cmd("ls -la")
           System.cmd("cp", ["/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"])
         _ ->
