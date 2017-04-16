@@ -36,7 +36,6 @@ defmodule MixDocker do
       case parsed do
         {[drone: true], ["docker.release"], []} -> 
           cp "/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"
-          docker :build, @dockerfile_release, image(:release), args
         _ ->
           docker :rm, cid
           docker :create, cid, image(:build)
