@@ -35,7 +35,7 @@ defmodule MixDocker do
       case parsed do
         {[drone: true], [], []} -> 
           IO.puts("TESTTTTTTTT")
-          System.cmd("cd", ["build"])
+          System.cmd("cd", ["_build"])
           Mix.shell.cmd("ls -la")
           System.cmd("cp", ["/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"])
         _ ->
