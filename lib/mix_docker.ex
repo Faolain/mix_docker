@@ -31,12 +31,21 @@ defmodule MixDocker do
     cid = "mix_docker-#{:rand.uniform(1000000)}"
 
     with_dockerfile @dockerfile_release, fn ->
-      docker :rm, cid
-      docker :create, cid, image(:build)
-      docker :cp, cid, "/opt/app/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"
-      docker :rm, cid
-      docker :build, @dockerfile_release, image(:release), args
+      parsed = OptionParser.parse(args)
+      IO.inspect(parsed)
+      case parsed do
+        {[drone: true], ["docker.release"], []} -> 
+          cp "/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"
+          docker :build, @dockerfile_release, image(:release), args
+        _ ->
+          docker :rm, cid
+          docker :create, cid, image(:build)
+          docker :cp, cid, "/opt/app/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"
+          docker :rm, cid
+          docker :build, @dockerfile_release, image(:release), args
+      end    
     end
+    
 
     Mix.shell.info "Docker image #{image(:release)} has been successfully created"
     Mix.shell.info "You can now test your app with the following command:"
