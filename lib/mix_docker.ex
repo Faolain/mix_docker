@@ -32,9 +32,8 @@ defmodule MixDocker do
 
     with_dockerfile @dockerfile_release, fn ->
       parsed = OptionParser.parse(args)
-      IO.inspect(parsed)
       case parsed do
-        {[drone: true], ["docker.release"], []} -> 
+        {[drone: true], [], []} -> 
           System.cmd("cp", ["/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"])
         _ ->
           docker :rm, cid
