@@ -35,7 +35,7 @@ defmodule MixDocker do
       IO.inspect(parsed)
       case parsed do
         {[drone: true], ["docker.release"], []} -> 
-          cp "/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"
+          System.cmd("cp", ["/_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz"])
         _ ->
           docker :rm, cid
           docker :create, cid, image(:build)
