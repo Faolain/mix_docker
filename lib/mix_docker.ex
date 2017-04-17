@@ -34,8 +34,6 @@ defmodule MixDocker do
       parsed = OptionParser.parse(args)
       case parsed do
         {[drone: true], [], []} -> 
-          IO.puts("TESTTTTTTTT")
-          Mix.shell.cmd("ls _build/prod/rel/slinq/releases/0.0.1")
           File.cp("_build/prod/rel/#{app}/releases/#{version}/#{app}.tar.gz", "#{app}.tar.gz")
         _ ->
           docker :rm, cid
